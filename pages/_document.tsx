@@ -14,9 +14,10 @@ export default class MyDocument extends Document {
 
   public render() {
     return (
-      <html>
+      <html lang="en">
         <Head>
-          <title>My Page</title>
+          <title>My Project</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
           {this.props.styleTags}
         </Head>
         <body>
