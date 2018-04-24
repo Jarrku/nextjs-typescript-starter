@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:9.11.1
-      
+
     working_directory: ~/repo
 
     steps:
@@ -28,24 +28,24 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: 
+      - run:
           name: Run build
           command: yarn build
 
-  deploy-master: 
+  deploy-master:
     docker:
       - image: circleci/node:9.11.1
 
     working_directory: ~/repo
-    
-    steps: 
+
+    steps:
       - checkout
 
-      - run: 
+      - run:
           name: Deploy to Now
           command: npx now --token ${NOW_TOKEN} --team ${NOW_TEAM} --public
 
-      - run: 
+      - run:
           name: Set new deployment alias
           command: npx now alias ${NOW_ALIAS} --token ${NOW_TOKEN} --team ${NOW_TEAM}
 
@@ -53,22 +53,22 @@ jobs:
           name: Cleanup older instance
           command: npx now-purge --token ${NOW_TOKEN} --team ${NOW_TEAM}
 
-  deploy-dev:    
+  deploy-dev:
     docker:
       - image: circleci/node:9.11.1
 
     working_directory: ~/repo
 
-    steps: 
+    steps:
       - checkout
 
-      - run: 
+      - run:
           name: Deploy to Now
           command: npx now --token ${NOW_TOKEN} --team ${NOW_TEAM} --public
 
-      - run: 
+      - run:
           name: Set new deployment alias
-          command: npx now alias ${NOW_ALIAS} --token ${NOW_TOKEN} --team ${NOW_TEAM}
+          command: npx now alias ${NOW_ALIAS}-dev --token ${NOW_TOKEN} --team ${NOW_TEAM}
 
       - run:
           name: Cleanup older instance
@@ -77,20 +77,20 @@ jobs:
 workflows:
   version: 2
   build-test-deploy:
-      jobs: 
+      jobs:
         - build
         - deploy-dev:
-            requires: 
+            requires:
               - build
             filters:
               branches:
                 only: develop
         - deploy-master:
-            requires: 
+            requires:
               - build
             filters:
               branches:
                 only: master
-  
+
 
 
