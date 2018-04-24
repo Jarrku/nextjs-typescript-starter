@@ -43,7 +43,7 @@ jobs:
 
       - run:
           name: Deploy to Now
-          command: npx now --token ${NOW_TOKEN} --team ${NOW_TEAM} --public
+          command: npx now --token ${NOW_TOKEN} --team ${NOW_TEAM} --regions bru --public
 
       - run:
           name: Set new deployment alias
@@ -64,7 +64,7 @@ jobs:
 
       - run:
           name: Deploy to Now
-          command: npx now --token ${NOW_TOKEN} --team ${NOW_TEAM} --public
+          command: npx now --token ${NOW_TOKEN} --team ${NOW_TEAM} --regions bru --public
 
       - run:
           name: Set new deployment alias
